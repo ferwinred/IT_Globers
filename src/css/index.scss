@@ -1,0 +1,20 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import './navMenu.scss';
+@import './form.scss';
+@import './home.scss';
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+}
+
+body {
+    width: 100%;
+    font-family: 'sans-serif';
+    color: $dark;
+}
+
+#root {
+    height: 100%;
+}
