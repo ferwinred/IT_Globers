@@ -1,12 +1,14 @@
 //importamos los hooks que vamos a necesitar
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 //importamos sweetalert para las alertas personalizadas
 import Sweet from "sweetalert2";
 
 //importamos la función que hará las validaciones del formulario para controlarlo
 import validator from "./form.controller";
+
+import {item} from '../data';
 
 //importamos los estilos adicionales del formulario
 import "../css/form.scss";
@@ -24,6 +26,17 @@ const Form = () => {
 
   //usamos el useParams para acceder al nombre de la aerolinea a la cual se le esta llenando el formulario
   const { name } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const is = item.data.find((e) => {
+      return e.name === name.replace(
+        /(\w+)[-](\w+)/,
+        "$1 $2"
+      )
+    })
+    if(!is) navigate('/', {replace:true})
+  }, [name, navigate])
 
   //esta función manejará el evento onChange de los imput y modificará las variables data y error del estado
   const handleChange = (e) => {
@@ -88,10 +101,16 @@ const Form = () => {
   return (
     <div className="wrapper">
       <h2 className="text-dark fw-bold w-100 bg-light text-center opacity-100">
-        {name}
+        {name.replace(
+        /(\w+)[-](\w+)/,
+        "$1 $2"
+      )}
       </h2>
       <p>
-        Hola, bienvenido, sabemos que quieres viajar con {name}, por favor
+        Hola, bienvenido, sabemos que quieres viajar con {name.replace(
+        /(\w+)[-](\w+)/,
+        "$1 $2"
+      )}, por favor
         diligencia el siguiente formulario:
       </p>
       <form className="form-control bg-brown" onSubmit={handleSubmit}>
